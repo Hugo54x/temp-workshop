@@ -1,0 +1,20 @@
+# Using an environment name other than "base" is not recommended!
+# Read https://github.com/mamba-org/micromamba-docker#multiple-environments
+# if you must use a different environment name.
+name: base
+channels:
+  - conda-forge
+dependencies:
+  - python 3.10.5
+  - pipreqs
+  - nodejs
+  - jupyter
+  - jupyterlab >= 3.4
+  - jupyterlab_server >= 2.14
+  - jupyter_contrib_nbextensions
+  - jupyterlab_widgets
+  - ipykernel >=5.1
+  - ipywidgets
+  - numpy
+  - numba
+  # - cudatoolkit

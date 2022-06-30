@@ -1,0 +1,64 @@
+services:
+  jupyterlab:
+    # image: mambaorg/micromamba:0.24-buster-slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    restart: unless-stopped
+    environment: 
+      JUPYTER_ENABLE_LAB: "yes"
+      JUPYTER_TOKEN: 'testme1'
+      JUPYTER_PASSWORD: 'sha1:38e0ca292ad8:8e50628603d763b141831a670ec93f98b7bff01e' # pre-mount hashed password file
+      LISTEN_ADDRESS: "0.0.0.0"
+      JUPYTER_PORT: 8888
+      RESTARTABLE: "yes"
+      GRANT_SUDO: "yes"
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./jupyterlab/:/home/mambauser/work/
+    # links:
+    #   - database
+    # depends_on:
+    #   - database
+    profiles:
+      - dev
+  
+  live:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: live
+    restart: "no"
+    profiles:
+      - live
+
+  test-live:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test-live
+    restart: "no"
+    profiles:
+      - live
+      - test
+
+  pre-packed-sample:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: pre-packed-sample
+    restart: "no"
+    profiles:
+      - pre-packed
+
+  test-pre-packed-sample:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test-pre-packed-sample
+    restart: "no"
+    profiles:
+      - pre-packed
+      - test
